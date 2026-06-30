@@ -6,7 +6,7 @@ import (
 )
 
 // StackInt is a last-in, first-out (LIFO) stack of integers.
-type Stack[T int | float64] struct {
+type Stack[T ~int | float64] struct {
 	stack []T
 }
 
