@@ -6,20 +6,20 @@ import (
 )
 
 // StackInt is a last-in, first-out (LIFO) stack of integers.
-type StackInt struct {
-	stack []int
+type Stack[T int | float64] struct {
+	stack []T
 }
 
 // Push adds value to the top of the stack.
-func (s *StackInt) Push(value int) {
+func (s *Stack[T]) Push(value T) {
 	if s.stack == nil {
-		s.stack = make([]int, 0)
+		s.stack = make([]T, 0)
 	}
 	s.stack = append(s.stack, value)
 }
 
 // Count returns the number of values currently on the stack.
-func (s StackInt) Count() int {
+func (s Stack[T]) Count() int {
 	if s.stack == nil {
 		return 0
 	}
@@ -28,9 +28,10 @@ func (s StackInt) Count() int {
 
 // Pop removes and returns the value at the top of the stack. It returns an
 // error if the stack is empty.
-func (s *StackInt) Pop() (int, error) {
+func (s *Stack[T]) Pop() (T, error) {
+	var zero T
 	if len(s.stack) == 0 {
-		return 0, errors.New("stack is empty")
+		return zero, errors.New("stack is empty")
 	}
 	value := s.stack[len(s.stack)-1]
 	s.stack = s.stack[:len(s.stack)-1]
@@ -38,14 +39,15 @@ func (s *StackInt) Pop() (int, error) {
 }
 
 // Total returns the sum of all values on the stack.
-func (s StackInt) Total() int {
+func (s Stack[T]) Total() T {
 	if s.stack == nil {
-		return 0
+		var zero T
+		return zero
 	}
 
-	return mapreduce.ReduceInt(
+	return mapreduce.Reduce(
 		s.stack,
-		func(x, y int) int {
+		func(x, y T) T {
 			return x + y
 		},
 		0)
@@ -53,7 +55,7 @@ func (s StackInt) Total() int {
 
 // Average returns the arithmetic mean of the values on the stack, or 0 if the
 // stack is empty.
-func (s StackInt) Average() float64 {
+func (s Stack[T]) Average() float64 {
 	if len(s.stack) == 0 {
 		return 0.0
 	}

@@ -12,7 +12,7 @@ func main() {
 	fmt.Println(input)
 	doublefunc := multiplefunc(2)
 	//quadruplefunc := multiplefunc(4)
-	output := mapreduce.MapInt(
+	output := mapreduce.Map[int, int](
 		input[:],
 		doublefunc,
 	)
@@ -29,7 +29,7 @@ func multiplefunc(factor int) func(int) int {
 }
 
 func sum(input []int) int {
-	return mapreduce.ReduceInt(input, func(x, y int) int {
+	return mapreduce.Reduce(input, func(x, y int) int {
 		return x + y
 	}, 0)
 }

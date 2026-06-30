@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	si1 := ds.StackInt{}
+	si1 := ds.Stack[int]{}
 	fmt.Println(si1.Count())
 	si1.Push(1)
 	si1.Push(2)

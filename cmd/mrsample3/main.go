@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	qi1 := ds.QueueInt{}
+	qi1 := ds.Queue[int]{}
 	qi1.Add(1)
 	qi1.Add(2)
 	qi1.Add(3)

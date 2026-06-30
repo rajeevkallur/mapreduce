@@ -2,8 +2,8 @@ package mapreduce
 
 // MapInt returns a new slice containing the result of applying operation to
 // each element of input.
-func MapInt(input []int, operation func(int) int) []int {
-	output := make([]int, len(input))
+func Map[T int|float64|string, U int|float64|string](input []T, operation func(T) U) []U {
+	output := make([]U, len(input))
 	for i, v := range input {
 		output[i] = operation(v)
 	}
@@ -12,8 +12,8 @@ func MapInt(input []int, operation func(int) int) []int {
 
 // FilterInt returns a new slice containing only the elements of input for which
 // condition returns true.
-func FilterInt(input []int, condition func(int) bool) []int {
-	output := make([]int, 0)
+func Filter[T int|float64|string](input []T, condition func(T) bool) []T {
+	output := make([]T, 0)
 	for _, v := range input {
 		if condition(v) {
 			output = append(output, v)
@@ -24,10 +24,11 @@ func FilterInt(input []int, condition func(int) bool) []int {
 
 // ReduceInt combines the elements of input into a single value by repeatedly
 // applying operation, starting from initial.
-func ReduceInt(input []int, operation func(int, int) int, initial int) int {
+func Reduce[T int|float64, U int|float64](input []T, operation func(T, U) T, initial T) U {
 	result := initial
 	for _, v := range input {
 		result = operation(result, v)
 	}
-	return result
+	return U(result)
 }
+
